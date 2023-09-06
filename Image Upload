@@ -1,0 +1,51 @@
+  //state
+ const [Uploadedfile, setUploadedFile] = useState({});
+
+ //upload file
+    const handleChangeFile = (e) => {
+        axiosInstance
+            .post(
+                "/core-module/api/v1/file-storages/create",
+                { file: e.target.files[0] },
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            )
+            .then((res) => {
+                console.log("fileUpload Data: ", res?.data);
+                setUploadedFile(res?.data);
+            })
+            .catch((error) => console.log(error, "err"));
+    };
+
+
+
+
+//inputs fields 
+      {/* img upload  */}
+                                    <Col md={4} className=" mg-t-5 mg-md-t-0">
+                                        <Form.Label className="form-label mg-b-10 text-dark">
+                                            {t("User.signature")}{" "}
+                                        </Form.Label>
+                                        <Form.Control
+                                            id="file"
+                                            type="file"
+                                            name="documentUrl"
+                                            onChange={(e) => handleChangeFile(e)}
+                                        />
+                                    </Col>
+
+                                        //showing image  
+                                    {updateUserData?.signatureName && (
+                                        <Col md={2} className="text-center mt-5">
+                                            <img
+                                                className="img-thumbnail"
+                                                style={{}}
+                                                src={`https://apams-api.babl.xyz/core-module/api/v1/file-storages/${updateUserData?.signatureName}`}
+                                                alt="Default"
+                                            />
+                                            <p>{updateUserData?.signatureName}</p>
+                                        </Col>
+                                    )}
