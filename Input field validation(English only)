@@ -1,0 +1,47 @@
+const [isValidEnglish, setIsValidEnglish] = useState(true);
+const handleInputEnglishChange = (e) => {
+    const inputText = e.target.value;
+    const englishRegex = /^[~`!@#$%^&*()_+=[\]\{}|;':",.\/<>?a-zA-Z0-9-\s]+$/;
+    setIsValidEnglish(englishRegex.test(inputText));
+};
+
+
+
+<Controller
+    name="titleEn"
+
+    control={control}
+
+    defaultValue={
+        updateapatitleData?.titleEn ? updateapatitleData?.titleEn : ""
+    }
+    render={({ field }) => (
+        <input
+            className="form-control"
+            style={{ height: "50px" }}
+            {...field}
+            onChange={(e) => {
+                field.onChange(e);
+                handleInputEnglishChange(e);
+            }}
+            onBlur={field.onBlur}
+            placeholder={t("CommonBtn.placeholder2")}
+        />
+    )}
+    rules={{ required: true }}
+/>
+
+
+{
+    (!isValidEnglish || errors?.titleEn?.type === "required") && (
+        <p style={{ color: 'red', margin: '0px', fontSize: "16px" }}>
+            {i18n.language === "en"
+                ? t("CommonToast.engErrorMessageEn")
+                : t("CommonToast.engErrorMessageBn")
+
+            }
+        </p>
+    )
+}
+
+disabled = {!isValidEnglish}
